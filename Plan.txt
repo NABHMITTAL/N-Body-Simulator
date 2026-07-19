@@ -1,0 +1,357 @@
+# Project TARS: N-Body Gravity Simulator
+
+**Mission:** Build a complete N-body gravity simulator from scratch that accurately simulates gravitational interactions between celestial bodies while learning physics, mathematics, algorithms, and performance optimization.
+
+---
+
+# Rules
+
+* Finish one phase completely before starting the next.
+* Every phase must leave the project in a working state.
+* Commit code after every completed phase.
+* Understand every line of code—don't copy blindly.
+* Prioritize correctness over performance initially.
+
+---
+
+# Tech Stack
+
+Language: Python 3
+
+Libraries:
+
+* NumPy
+* Matplotlib (initial visualization)
+* Pygame (optional later)
+* Numba (optimization)
+* CuPy or PyTorch (GPU acceleration, final phase)
+
+IDE:
+
+* VS Code
+
+Version Control:
+
+* Git + GitHub
+
+---
+
+# Phase 0 — Setup
+
+## Objectives
+
+* Install Python
+* Install NumPy
+* Install Matplotlib
+* Create project structure
+* Initialize Git repository
+
+Folder Structure
+
+Project_TARS/
+│
+├── main.py
+├── body.py
+├── physics.py
+├── renderer.py
+├── constants.py
+├── simulation.py
+├── requirements.txt
+├── README.md
+└── assets/
+
+Checkpoint:
+Project runs successfully.
+
+---
+
+# Phase 1 — Two-Body Gravity
+
+## Goal
+
+Simulate two objects attracting each other using Newton's Law of Gravitation.
+
+Implement:
+
+Body class
+
+* Mass
+* Position
+* Velocity
+* Acceleration
+* Radius
+* Color
+
+Physics
+
+* Newton's Law of Gravitation
+* Force calculation
+* Velocity update
+* Position update
+
+Visualization
+
+* Draw both bodies
+* Animate motion
+
+Learn:
+
+* Vectors
+* Forces
+* Euler Integration
+
+Checkpoint:
+Earth successfully orbits a Sun-like body.
+
+---
+
+# Phase 2 — Generalize to N Bodies
+
+Replace fixed objects with a dynamic list.
+
+Body[]
+
+Every body interacts with every other body.
+
+Implement:
+
+* Nested force calculations
+* Dynamic body creation
+* Simulation loop
+
+Checkpoint:
+10 planets interact correctly.
+
+---
+
+# Phase 3 — Better Integrator
+
+Replace Euler Integration.
+
+Research:
+
+* Leapfrog Integration
+  OR
+* Velocity Verlet
+
+Objective:
+Improve orbit stability.
+
+Checkpoint:
+Circular orbits remain stable for long simulations.
+
+---
+
+# Phase 4 — Camera System
+
+Implement:
+
+* Zoom
+* Pan
+* Center on selected body
+* Adjustable simulation speed
+
+Controls:
+Mouse Wheel → Zoom
+
+Middle Mouse → Pan
+
+Space → Pause
+
+R → Reset
+
+Checkpoint:
+Navigation feels smooth.
+
+---
+
+# Phase 5 — Trails
+
+Store previous positions.
+
+Draw orbital trails.
+
+Options:
+
+* Adjustable trail length
+* Toggle trails
+
+Checkpoint:
+Beautiful orbital paths.
+
+---
+
+# Phase 6 — Collision Physics
+
+Detect collisions.
+
+Options:
+
+* Merge bodies
+* Conservation of Momentum
+* New mass
+* New velocity
+* New radius
+
+Checkpoint:
+Asteroids merge naturally.
+
+---
+
+# Phase 7 — System Generator
+
+Automatically generate:
+
+* Solar System
+* Binary Stars
+* Random Planet Systems
+* Asteroid Belts
+* Spiral Galaxies
+
+Checkpoint:
+One click creates a realistic star system.
+
+---
+
+# Phase 8 — Statistics Panel
+
+Display:
+
+FPS
+
+Simulation Time
+
+Number of Bodies
+
+Total Mass
+
+Total Energy
+
+Momentum
+
+Checkpoint:
+Simulation statistics update in real time.
+
+---
+
+# Phase 9 — Performance Optimization
+
+Profile code.
+
+Optimize:
+
+* NumPy vectorization
+* Memory allocations
+* Efficient loops
+
+Target:
+
+1000 bodies @ 60 FPS
+
+Checkpoint:
+Smooth simulation.
+
+---
+
+# Phase 10 — GPU Acceleration
+
+Research:
+
+CUDA
+
+CuPy
+
+Parallel force calculations
+
+Goal:
+
+10000+ bodies
+
+Checkpoint:
+GPU is actively computing gravitational forces.
+
+---
+
+# Phase 11 — Advanced Physics
+
+Optional Features:
+
+Black Holes
+
+Escape Velocity
+
+Roche Limit
+
+Lagrange Points
+
+Tidal Forces
+
+Relativistic Gravity (Approximation)
+
+Checkpoint:
+Simulator behaves like a miniature astrophysics lab.
+
+---
+
+# Phase 12 — Polish
+
+Add:
+
+Settings Menu
+
+Simulation Presets
+
+Save/Load
+
+Screenshots
+
+Recording
+
+Dark Theme
+
+UI Improvements
+
+README
+
+License
+
+Executable Build
+
+Checkpoint:
+Project is ready for GitHub.
+
+---
+
+# Stretch Goals
+
+* Barnes-Hut Algorithm (O(N log N))
+* Octree Implementation
+* 3D Simulation
+* Galaxy Collision Simulator
+* Planet Formation Simulation
+* OpenGL Renderer
+* VR Visualization
+* Multi-GPU Support
+
+---
+
+# Success Criteria
+
+Minimum Success:
+
+* Stable gravity simulation
+* N-body support
+* Smooth visualization
+* Collision handling
+
+Target Success:
+
+* 1000 bodies in real time
+* Stable orbits
+* Interactive controls
+* Professional documentation
+
+Ultimate Goal:
+A polished, optimized N-body gravity simulator that demonstrates strong programming, physics, mathematics, and optimization skills while serving as a standout portfolio project.
+
+**Mission Status:** READY TO BEGIN.
