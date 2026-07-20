@@ -8,10 +8,22 @@ class Vector2:
   def __str__(self):
     return f"({self.x}, {self.y})"
   
+
+  def __add__(self, vector:Vector2):
+     X = self.x + vector.x
+     Y = self.y + vector.y
+     return Vector2(X,Y)
+  
   def __mul__(self,scaler):
     X = self.x * scaler
     Y = self.y * scaler
     return Vector2(X,Y)
+  
+  def __truediv__(self,scaler):
+    X = self.x / scaler
+    Y = self.y / scaler
+    return Vector2(X,Y)
+  
 
 
 def unit_vec(vec1:Vector2, vec2: Vector2):
