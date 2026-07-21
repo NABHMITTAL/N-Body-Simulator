@@ -1,3 +1,4 @@
-import universe
+from simulation import Simulation
 
-universe.run_sim()
+sim = Simulation()
+sim.run()

@@ -16,7 +16,7 @@ class Body:
     position: Vector2, 
     velocity: Vector2, 
     radius: float, 
-    color:str
+    color:tuple
     ):
 
     self.mass = mass

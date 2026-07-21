@@ -2,7 +2,6 @@ import physics
 from body import Body
 from vector2 import Vector2
 dt = 0.01 #time delta per frame
-body_list = []
 
 sun = Body(
   "Sun",
@@ -10,7 +9,7 @@ sun = Body(
   Vector2(0, 0),
   Vector2(0, 0),
   20,
-  "yellow"
+  (255,255,0)#yellow
 )
 
 earth = Body(
@@ -19,7 +18,7 @@ earth = Body(
   Vector2(1.496e11, 0),
   Vector2(0, 29780),
   8,
-  "blue"
+  (0,255,0)#blue
 )
 
 moon = Body(
@@ -28,35 +27,23 @@ moon = Body(
   Vector2(1.499844e11, 0),
   Vector2(0,30802),
   3,
-  "gray"
+  (128,128,128)#gray
 )
 
-body_list = [sun, earth, moon]
+class Universe:
+  def __init__(self):
+    self.bodies = [sun, earth, moon]
 
+  def step(self,dt):
+    for item in self.bodies:
+      net_force = Vector2(0,0)
+      for body in self.bodies:
+        if item == body:
+          continue
+        net_force = net_force + physics.gravitational_force(item, body)
+      item.acceleration = physics.acceleration_calc(net_force, item.mass)
 
-def step():
+    for items in self.bodies:
+      items.velocity = physics.vel_update(items,dt)
+      items.position = physics.pos_update(items,dt)
 
-  for item in body_list:
-    net_force = Vector2(0,0)
-    for bodies in body_list:
-      if item == bodies:
-        continue
-      net_force = net_force + physics.gravitational_force(item, bodies)
-    item.acceleration = physics.acceleration_calc(net_force, item.mass)
-
-  for items in body_list:
-    items.velocity = physics.vel_update(items,dt)
-    items.position = physics.pos_update(items,dt)
-
-#test run
-def run_sim():
-  for i in range(100000):
-    step()
-    if i%1000 ==0:
-      print(f"Step {i+1}")
-      print(sun)
-      print()
-      print(earth)
-      print()
-      print(moon)
-      print()
