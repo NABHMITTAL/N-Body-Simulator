@@ -14,6 +14,11 @@ class Vector2:
      Y = self.y + vector.y
      return Vector2(X,Y)
   
+  def __sub__(self, vector:Vector2):
+    X = self.x - vector.x
+    Y = self.y - vector.y
+    return Vector2(X,Y)
+  
   def __mul__(self,scaler):
     X = self.x * scaler
     Y = self.y * scaler

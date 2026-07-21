@@ -18,7 +18,7 @@ earth = Body(
   Vector2(1.496e11, 0),
   Vector2(0, 29780),
   8,
-  (0,255,0)#blue
+  (0,0,255)#blue
 )
 
 moon = Body(
