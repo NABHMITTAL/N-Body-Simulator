@@ -34,16 +34,15 @@ class Camera:
     
     if keys[pygame.K_a]:
       self.position.x = self.position.x - (1*self.move_speed)
-    if keys[pygame.K_f]:
-      self.follow_target = universe.earth
-    if keys[pygame.K_g]:
-      self.follow_target = None
     
 
     if self.follow_target != None:
       distance = self.follow_target.position - self.position
       move_strength = distance*0.04
       self.position = self.position + move_strength
+
+  def set_target(self, body):
+    self.follow_target = body
 
 class Renderer:
 
@@ -54,8 +53,17 @@ class Renderer:
     self.color = (0,0,0)
     self.state = True
     self.screen = pygame.display.set_mode((self.width, self.height))
+
     self.camera = Camera(self.width, self.height)
+
     pygame.display.set_caption("N-Body Simulator")
+
+    self.switch_body_requested = False
+    self.time_up_requested = False
+    self.time_down_requested = False
+    self.time_to_one = False
+
+    self.font = pygame.font.SysFont("Consolas", 16)
 
 
   def process_events(self):
@@ -67,10 +75,60 @@ class Renderer:
           self.camera.zoom *= self.camera.zoom_speed
         if event.y < 0:
           self.camera.zoom /= self.camera.zoom_speed
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_TAB:
+          self.switch_body_requested = True
+        if event.key == pygame.K_PERIOD:
+          self.time_up_requested = True
+        if event.key == pygame.K_COMMA:
+          self.time_down_requested = True
+        if event.key == pygame.K_SLASH:
+          self.time_to_one = True
+        if event.key == pygame.K_g:
+          self.camera.follow_target = None
 
 
-  def draw(self,world:universe.Universe):
+
+  def draw(self,world:universe.Universe, time_scale):
     self.screen.fill(self.color)
+    title = self.font.render(
+      "N- Body Simulator",
+      True,
+      (255,255,255)
+    )
+
+    time_scale_render = self.font.render(
+      f"Time warp: {time_scale}",
+      True,
+      (255,255,255)
+    )
+
+    if self.camera.follow_target == None:
+      following_who = self.font.render(
+        f"Following: None",
+        True,
+        (255,255,255)
+      )
+    else:
+      following_who = self.font.render(
+        f"Following: {self.camera.follow_target.name}",
+        True,
+        (255,255,255)
+      )
+
+    self.screen.blit(
+      title,
+      (20,20)
+    )
+    self.screen.blit(
+      time_scale_render,
+      (self.width/2.2,20)
+    )
+    self.screen.blit(
+      following_who,
+      (20, 40)
+    )
+
     for body in world.bodies:
       position = self.camera.world_to_screen(body.position)
       pygame.draw.circle(
