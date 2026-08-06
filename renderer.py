@@ -6,7 +6,7 @@ from vector2 import Vector2
 class Camera:
   def __init__(self,w,h):
     self.position = Vector2(0,0)
-    self.zoom = 3.5e-9
+    self.zoom = 3.5e-6
     self.follow_target = None
     self.move_speed = 1e8
     self.zoom_speed = 1.1

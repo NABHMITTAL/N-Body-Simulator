@@ -25,7 +25,8 @@ class Body:
     self.velocity = velocity
     self.radius = radius
     self.color = color
-    self.acceleration = 0
+    self.acceleration = Vector2(0,0)
+    self.old_acceleration = Vector2(0,0)
 
   def __str__(self):
     return (

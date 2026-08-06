@@ -1,19 +1,21 @@
-from universe import Universe
+import universe
 import renderer
-
 
 class Simulation:
   def __init__(self):
-    self.universe = Universe()
+    self.universe = universe.Universe()
     self.renderer = renderer.Renderer()
     self.selected_body_index = 0
     self.renderer.camera.follow_target = self.universe.bodies[self.selected_body_index]
+    self.max_substeps = 500
 
     self.selected_body = 0
 
     self.dt = 0.01
     self.time_scale_index = 0
     self.time_scales = [1,10,100,1000,5000,10000,50000,100000,1000000,10000000]
+
+
 
   def check_events(self):
     #switch body
@@ -40,10 +42,25 @@ class Simulation:
   def run(self):
     while self.renderer.state:
 
+      # ================= Events =================
       self.renderer.process_events()
       self.check_events()
-      sim_dt = self.dt * self.time_scales[self.time_scale_index]
+      # ==========================================
+
+      time_warp = self.time_scales[self.time_scale_index]
+      substeps = min(time_warp, self.max_substeps)
+
+      # ================= Physics ================
+      for _ in range(substeps):
+        self.universe.leapFrog(self.dt)
+      # ==========================================
+
+      # ================= Camera =================
       self.renderer.camera.update()
-      self.universe.step(sim_dt)
-      self.renderer.draw(self.universe, self.time_scales[self.time_scale_index])
-      print(self.renderer.camera.zoom)
+      # ==========================================
+
+      # ================= Render =================
+      self.renderer.draw(self.universe, time_warp)
+      # ==========================================
+
+

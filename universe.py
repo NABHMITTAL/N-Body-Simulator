@@ -1,7 +1,8 @@
 import physics
 from body import Body
 from vector2 import Vector2
-dt = 0.01 #time delta per frame
+dt = 0.1 #time delta per frame
+
 
 sun = Body(
   "Sun",
@@ -202,7 +203,7 @@ neptune = Body(
     (65,105,225)
 )
 
-# Triton
+ #Triton
 triton = Body(
     "Triton",
     2.14e22,
@@ -212,40 +213,43 @@ triton = Body(
     (180,220,255)
 )
 
+
+
 class Universe:
   def __init__(self):
     self.bodies = [
-    sun,
+      sun,
 
-    mercury,
-    venus,
+      mercury,
+      venus,
 
-    earth,
-    moon,
+      earth,
+      moon,
 
-    mars,
-    phobos,
-    deimos,
+      mars,
+      phobos,
+      deimos,
 
-    jupiter,
-    io,
-    europa,
-    ganymede,
-    callisto,
+      jupiter,
+      io,
+      europa,
+      ganymede,
+      callisto,
 
-    saturn,
-    titan,
-    enceladus,
+      saturn,
+      titan,
+      enceladus,
 
-    uranus,
-    titania,
-    oberon,
+      uranus,
+      titania,
+      oberon,
 
-    neptune,
-    triton
+      neptune,
+      triton
+
 ]
 
-  def step(self,dt):
+  def eular(self,dt):
     for item in self.bodies:
       net_force = Vector2(0,0)
       for body in self.bodies:
@@ -254,7 +258,54 @@ class Universe:
         net_force = net_force + physics.gravitational_force(item, body)
       item.acceleration = physics.acceleration_calc(net_force, item.mass)
 
+
     for items in self.bodies:
       items.velocity = physics.vel_update(items,dt)
       items.position = physics.pos_update(items,dt)
+      items.acceleration.x = 0
+      items.acceleration.y = 0
+    
+  def leapFrog(self, dt):
+    # ------------------------------------------------
+    # 1. Calculate acceleration at the current position
+    # ------------------------------------------------
 
+    for item in self.bodies:
+      net_force = Vector2(0, 0)
+      for body in self.bodies:
+
+        if item == body:
+          continue
+        net_force = (net_force + physics.gravitational_force(item, body))
+
+      item.old_acceleration = (physics.acceleration_calc(net_force,item.mass))
+
+    # ------------------------------------------------
+    # 2. Update every position
+    # ------------------------------------------------
+
+    for item in self.bodies:
+      item.position = (item.position + item.velocity * dt + item.old_acceleration * (0.5 * dt ** 2))
+
+    # ------------------------------------------------
+    # 3. Calculate acceleration at the new position
+    # ------------------------------------------------
+
+    for item in self.bodies:
+
+      net_force = Vector2(0, 0)
+
+      for body in self.bodies:
+        if item == body:
+          continue
+        net_force = (net_force + physics.gravitational_force(item, body))
+      item.acceleration = (physics.acceleration_calc(net_force,item.mass))
+
+    # ------------------------------------------------
+    # 4. Update every velocity
+    # ------------------------------------------------
+
+    for item in self.bodies:
+      item.velocity = (item.velocity + (item.old_acceleration + item.acceleration) * (0.5 * dt))
+
+    

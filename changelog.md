@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.0.6 — Leapfrog Integration
+
+### Added
+
+- Leapfrog (Velocity Verlet) integrator.
+- Stable arbitrary multi-body simulation support.
+- Validation logs (`tests.md`).
+
+### Improved
+
+- Replaced Euler integration with Leapfrog integration.
+- Stable long-term orbital propagation.
+- Stable behaviour under multiple time warp levels.
+- Improved numerical accuracy compared to the previous integrator.
+
+### Current Known Issue
+
+- High time warp levels result in significant performance degradation.
+- The slowdown appears to originate from repeated gravitational force calculations during each Leapfrog step.
+- Gravity solver optimisation will be addressed in the next development phase.
+
+
 ## v0.0.5 - Simulation Controls
 
 ### Added
