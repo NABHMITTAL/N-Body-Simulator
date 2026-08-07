@@ -29,6 +29,9 @@ class Vector2:
     Y = self.y / scaler
     return Vector2(X,Y)
   
+def mag_calc(vec):
+  mag = math.sqrt(vec.x**2 + vec.y**2)
+  return mag
 
 
 def unit_vec(vec1:Vector2, vec2: Vector2):
@@ -38,3 +41,5 @@ def unit_vec(vec1:Vector2, vec2: Vector2):
   X = dx/magnitude
   Y = dy/magnitude
   return Vector2(X,Y)
+
+

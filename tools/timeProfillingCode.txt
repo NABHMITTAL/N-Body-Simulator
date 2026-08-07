@@ -1,7 +1,6 @@
 import universe
 import renderer
 import time
-import physics
 
 class Simulation:
   def __init__(self):
@@ -91,48 +90,30 @@ class Simulation:
       self.render_time += time.perf_counter() - start
       # ==========================================
 
-
       self.frame_time += time.perf_counter() - frame_start
 
       self.profile_frames += 1
 
       if self.profile_frames == 100:
-        print(f"\n========== Physics Function Profile {self.time_scales[self.time_scale_index]}x ==========")
+          print(f"Warp Level: {self.time_scales[self.time_scale_index]}")
+          print("\n==============================")
+          print("Performance Profile (100 frames)")
+          print("==============================")
 
-        # print(f"distance()")
-        # print(f"  Calls : {physics.distance_calls}")
-        # print(f"  Avg   : {(physics.distance_time / physics.distance_calls) * 1e6:.3f} µs")
+          print(f"Physics : {(self.physics_time/100)*1000:.3f} ms")
+          print(f"Rendering : {(self.render_time/100)*1000:.3f} ms")
+          print(f"Camera : {(self.camera_time/100)*1000:.3f} ms")
+          print(f"Events : {(self.event_time/100)*1000:.3f} ms")
+          print(f"Frame : {(self.frame_time/100)*1000:.3f} ms")
 
-        print()
+          print("==============================\n")
 
-        print(f"displacement()")
-        print(f"  Calls : {physics.displacement_calls}")
-        print(f"  Avg   : {(physics.displacement_time / physics.displacement_calls) * 1e6:.3f} µs")
+          self.profile_frames = 0
 
-        print()
-
-        print(f"gravitational_force()")
-        print(f"  Calls : {physics.force_calls}")
-        print(f"  Avg   : {(physics.force_time / physics.force_calls) * 1e6:.3f} µs")
-
-        print()
-
-        print(f"acceleration_calc()")
-        print(f"  Calls : {physics.acceleration_calls}")
-        print(f"  Avg   : {(physics.acceleration_time / physics.acceleration_calls) * 1e6:.3f} µs")
-        print(f"Warp Level: {self.time_scales[self.time_scale_index]}")
-
-        print(f"Physics : {(self.physics_time/100)*1000:.3f} ms")
-        print(f"Frame : {(self.frame_time/100)*1000:.3f} ms")
-
-        print("==============================\n")
-
-        self.profile_frames = 0
-
-        self.physics_time = 0
-        self.render_time = 0
-        self.camera_time = 0
-        self.event_time = 0
-        self.frame_time = 0
+          self.physics_time = 0
+          self.render_time = 0
+          self.camera_time = 0
+          self.event_time = 0
+          self.frame_time = 0
 
 

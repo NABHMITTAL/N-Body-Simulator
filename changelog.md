@@ -1,5 +1,28 @@
 # Changelog
 
+
+
+# v0.0.7.1 — Benchmark infrastructure and first Leapfrog optimization
+
+## Added
+
+* Testing/ directory to organize benchmark reports and raw profiling data.
+* raw Leapfrog benchmark logs.
+* formatted Leapfrog benchmark reports.
+* benchmark formatting utility scaffold.
+* archived testing assets (test_bodies_data.txt and profiling reference code).
+
+## Improved
+
+* Optimized gravitational_force() by removing redundant distance calculations.
+* Introduced Vector2.mag_calc() to reuse the displacement vector during force computation.
+* Reduced execution time of the force calculation while preserving identical simulation behavior.
+
+## Current Status.
+
+* Optimization initiated.
+* Current optimization work is focused on profiling and improving the Leapfrog integrator without changing numerical behavior.
+
 ## v0.0.6 — Leapfrog Integration
 
 ### Added
