@@ -117,10 +117,6 @@ class Simulation:
 
         print()
 
-        print(f"acceleration_calc()")
-        print(f"  Calls : {physics.acceleration_calls}")
-        print(f"  Avg   : {(physics.acceleration_time / physics.acceleration_calls) * 1e6:.3f} µs")
-        print(f"Warp Level: {self.time_scales[self.time_scale_index]}")
 
         print(f"Physics : {(self.physics_time/100)*1000:.3f} ms")
         print(f"Frame : {(self.frame_time/100)*1000:.3f} ms")

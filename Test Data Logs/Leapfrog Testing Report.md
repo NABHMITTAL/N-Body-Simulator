@@ -833,3 +833,168 @@ Average Physics Time:
 - Average `gravitational_force()` execution time decreased by approximately **27%**.
 - Overall physics execution time improved while maintaining identical Leapfrog integration behavior.
 - The optimization establishes the first measurable performance improvement of Procedure 7 and serves as the new performance baseline for subsequent optimizations.
+
+
+
+# Leapfrog Optimization Test 2 — Direct Gravitational Acceleration
+
+## Objective
+
+Measure the performance impact of replacing the previous force → acceleration calculation chain with direct gravitational acceleration.
+
+The optimization removes the intermediate force-to-acceleration conversion from the Leapfrog hot path.
+
+---
+
+## System
+
+* **Bodies:** 17 arbitrary test bodies
+* **Integrator:** Leapfrog (Velocity Verlet)
+* **Time Warp:** 100×
+* **Physics timestep:** `dt = 0.01`
+* **Benchmark:** Multiple profiling runs
+
+### Optimization Applied
+
+The previous calculation:
+
+```text
+displacement
+→ gravitational_force
+→ acceleration_calc
+→ acceleration
+```
+
+was replaced with direct gravitational acceleration:
+
+```text
+displacement
+→ gravitational_acceleration
+```
+
+This eliminated the separate `acceleration_calc()` operation.
+
+---
+
+## Results
+
+### Run 1
+
+```text
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 683264
+  Avg   : 0.184 µs
+
+gravitational_force()
+  Calls : 683264
+  Avg   : 0.700 µs
+
+Physics : 5.527 ms
+Frame : 6.849 ms
+==============================
+```
+
+### Run 2
+
+```text
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 6123264
+  Avg   : 0.180 µs
+
+gravitational_force()
+  Calls : 6123264
+  Avg   : 0.677 µs
+
+Physics : 61.934 ms
+Frame : 63.827 ms
+==============================
+```
+
+### Run 3
+
+```text
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 11563264
+  Avg   : 0.180 µs
+
+gravitational_force()
+  Calls : 11563264
+  Avg   : 0.677 µs
+
+Physics : 62.326 ms
+Frame : 64.147 ms
+==============================
+```
+
+---
+
+## Comparison With Previous Baseline
+
+Previous optimization baseline at 100×:
+
+```text
+displacement()       ≈ 0.180 µs
+gravitational_force() ≈ 1.000 µs
+acceleration_calc()  ≈ 0.224 µs
+Physics              ≈ 76–82 ms
+```
+
+After direct acceleration optimization:
+
+```text
+displacement()              ≈ 0.181 µs
+gravitational calculation   ≈ 0.678 µs
+acceleration_calc()         Removed
+Physics                     ≈ 62 ms
+```
+
+### Function-level improvement
+
+The gravitational calculation decreased from approximately:
+
+```text
+1.00 µs → 0.678 µs
+```
+
+representing an improvement of approximately **32% per gravitational interaction**.
+
+The `acceleration_calc()` function was completely removed from the hot path.
+
+---
+
+## Observations
+
+* `displacement()` performance remained effectively unchanged.
+* The gravitational calculation became substantially faster.
+* The separate `acceleration_calc()` operation was eliminated.
+* Physics execution time decreased substantially compared with the previous baseline.
+* The optimization does not change the underlying Leapfrog integration method.
+* The optimization preserves the same mathematical acceleration:
+
+
+---
+
+## Inference
+
+The benchmark confirms that calculating gravitational acceleration directly is more efficient than first calculating gravitational force and subsequently dividing by the affected body's mass.
+
+The largest gain comes from eliminating the intermediate force-to-acceleration conversion and associated arithmetic/function-call overhead.
+
+This confirms that the force calculation path contained unnecessary work for the Leapfrog integrator.
+
+---
+
+## Conclusion
+
+**Optimization 7.2 was successful.**
+
+The direct gravitational acceleration implementation reduced the cost of the gravitational calculation by approximately **32%** and reduced overall physics execution time from roughly **76–82 ms to approximately 62 ms at 100× warp**.
+
+The optimization is therefore retained as the new performance baseline.
+

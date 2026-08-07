@@ -466,7 +466,7 @@ Leapfrog Calls : 50000
 ==============================
 
 
-# Physics Function Profile
+# Physics Function Profile (No Optimisation)
 
 ========== Physics Function Profile 1x ==========
 distance()
@@ -753,3 +753,107 @@ Physics : 504.740 ms
 Frame : 506.579 ms
 ==============================
 
+# Physics Function Profile (1st Optimisation)
+
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 4702880
+  Avg   : 0.179 µs
+
+gravitational_force()
+  Calls : 4702880
+  Avg   : 1.005 µs
+
+acceleration_calc()
+  Calls : 293930
+  Avg   : 0.224 µs
+Warp Level: 100
+Physics : 66.460 ms
+Frame : 68.384 ms
+==============================
+
+
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 10142880
+  Avg   : 0.180 µs
+
+gravitational_force()
+  Calls : 10142880
+  Avg   : 0.995 µs
+
+acceleration_calc()
+  Calls : 633930
+  Avg   : 0.224 µs
+Warp Level: 100
+Physics : 79.837 ms
+Frame : 81.585 ms
+==============================
+
+
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 15582880
+  Avg   : 0.180 µs
+
+gravitational_force()
+  Calls : 15582880
+  Avg   : 1.001 µs
+
+acceleration_calc()
+  Calls : 973930
+  Avg   : 0.224 µs
+Warp Level: 100
+Physics : 82.032 ms
+Frame : 83.861 ms
+==============================
+
+
+# Physics Function Profile (2nd Optimisation)
+
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 683264
+  Avg   : 0.184 µs
+
+gravitational_force()
+  Calls : 683264
+  Avg   : 0.700 µs
+
+Physics : 5.527 ms
+Frame : 6.849 ms
+==============================
+
+
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 6123264
+  Avg   : 0.180 µs
+
+gravitational_force()
+  Calls : 6123264
+  Avg   : 0.677 µs
+
+Physics : 61.934 ms
+Frame : 63.827 ms
+==============================
+
+
+========== Physics Function Profile 100x ==========
+
+displacement()
+  Calls : 11563264
+  Avg   : 0.180 µs
+
+gravitational_force()
+  Calls : 11563264
+  Avg   : 0.677 µs
+
+Physics : 62.326 ms
+Frame : 64.147 ms
+==============================

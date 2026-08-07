@@ -472,15 +472,18 @@ class Universe:
     # 1. Calculate acceleration at the current position
     # ------------------------------------------------
 
+    net_acceleration = Vector2(0, 0)
     for item in self.bodies:
-      net_force = Vector2(0, 0)
       for body in self.bodies:
-
         if item == body:
           continue
-        net_force = (net_force + physics.gravitational_force(item, body))
 
-      item.old_acceleration = (physics.acceleration_calc(net_force,item.mass))
+        net_acceleration = (
+          net_acceleration
+          + physics.gravitational_acceleration(item, body)
+        )
+
+      item.old_acceleration = net_acceleration
 
     # ------------------------------------------------
     # 2. Update every position
@@ -493,15 +496,18 @@ class Universe:
     # 3. Calculate acceleration at the new position
     # ------------------------------------------------
 
+    net_acceleration = Vector2(0, 0)
     for item in self.bodies:
-
-      net_force = Vector2(0, 0)
-
       for body in self.bodies:
         if item == body:
           continue
-        net_force = (net_force + physics.gravitational_force(item, body))
-      item.acceleration = (physics.acceleration_calc(net_force,item.mass))
+
+        net_acceleration = (
+          net_acceleration
+          + physics.gravitational_acceleration(item, body)
+        )
+
+      item.old_acceleration = net_acceleration
 
     # ------------------------------------------------
     # 4. Update every velocity
